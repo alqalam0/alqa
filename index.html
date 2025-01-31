@@ -1,318 +1,208 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IRAQEDU</title>
-    <style>
-        :root {
-            --primary: #c62828;
-            --dark-bg: #0a0a0a;
-            --dark-text: #f5f5f5;
-            --dark-card: #1a1a1a;
-            --dark-border: #333;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRAQEDU</title>
+<style>
+:root {
+  --primary: #c62828;
+  --dark-bg: #0a0a0a;
+  --dark-text: #f5f5f5;
+  --dark-card: #1a1a1a;
+}
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Almarai', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+* {
+  box-sizing: border-box;
+  font-family: 'Almarai', sans-serif;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
 
-        body {
-            background: var(--dark-bg);
-            color: var(--dark-text);
-            line-height: 1.6;
-        }
+body {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+  line-height: 1.6;
+}
 
-        .page {
-            display: none;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+header {
+  background: var(--dark-card);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-        .page.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+.logo {
+  height: 50px;
+  cursor: pointer;
+  filter: drop-shadow(0 0 5px var(--primary));
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+.nav-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
 
-        header {
-            background: var(--dark-card);
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+.page {
+  display: none;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-        .logo {
-            height: 50px;
-            cursor: pointer;
-        }
+.page.active {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
 
-        .nav-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-        .nav-btn:hover {
-            opacity: 0.9;
-        }
+.teacher-card {
+  background: var(--dark-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: transform 0.3s;
+  border: 2px solid var(--primary);
+}
 
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            gap: 0.5rem;
-        }
+.teacher-card:hover {
+  transform: translateY(-5px);
+}
 
-        #searchInput {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid var(--dark-border);
-            border-radius: 8px;
-            background: var(--dark-card);
-            color: var(--dark-text);
-            font-size: 1rem;
-        }
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  margin: 2rem 0;
+}
 
-        #searchButton {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .teachers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .teacher-card {
-            background: var(--dark-card);
-            padding: 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            border-left: 4px solid var(--primary);
-        }
-
-        .teacher-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .teacher-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .classes-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .class-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--dark-card);
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .lectures-list {
-            display: none;
-            gap: 0.5rem;
-            padding: 0.5rem;
-        }
-
-        .lecture-item {
-            padding: 1rem;
-            background: var(--dark-bg);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .lecture-item:hover {
-            background: #4a1a1a;
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            margin: 2rem 0;
-        }
-
-        .video-container video {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .teachers-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+.video-container video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #000;
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <img src="https://i.imghippo.com/files/mjo2678Udg.png" class="logo" onclick="navigate('home')">
-        <button class="nav-btn" onclick="navigate('home')">الصفحة الرئيسية</button>
-    </header>
+<body oncontextmenu="return false">
 
-    <div id="homePage" class="page active">
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="ابحث عن مدرس...">
-            <button id="searchButton">بحث</button>
-        </div>
-        <div class="teachers-grid" id="teachersGrid"></div>
-    </div>
+<header>
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..." class="logo" onclick="navigate('home')">
+  <button class="nav-btn" onclick="navigate('home')">🏠 الرئيسية</button>
+</header>
 
-    <div id="classesPage" class="page">
-        <div class="classes-list" id="classesList"></div>
-    </div>
+<div id="homePage" class="page active">
+  <div class="teacher-card" onclick="loadTeacher('ENCRYPTED_TEACHER_1')">
+    <h3>👨🏫 الأستاذ حسين الهاشمي</h3>
+    <p>📚 مادة الرياضيات المتقدمة</p>
+  </div>
+  <div class="teacher-card" onclick="loadTeacher('ENCRYPTED_TEACHER_2')">
+    <h3>👩🏫 الأستاذة سارة أحمد</h3>
+    <p>📖 مادة الفيزياء</p>
+  </div>
+</div>
 
-    <div id="videoPage" class="page">
-        <div class="video-container">
-            <video id="videoPlayer" controls></video>
-        </div>
-        <button class="nav-btn" onclick="navigate('classes')">العودة</button>
-    </div>
+<div id="videoPage" class="page">
+  <div class="video-container">
+    <video id="secureVideoPlayer" controls disablePictureInPicture></video>
+  </div>
+  <button class="nav-btn" onclick="navigate('home')">← العودة</button>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script>
-        // بيانات مشفرة
-        const encryptedData = {
-            teachers: [
-                {
-                    id: 1,
-                    name: "حسين الهاشمي",
-                    image: "aHR0cHM6Ly9pLmltZ2hpcHBvLmNvbS9maWxlcy9kbUc5NjQ3a2IucG5n",
-                    subject: "الرياضيات",
-                    classes: [
-                        {
-                            name: "الفصل الأول",
-                            lectures: [
-                                {
-                                    title: "المحاضرة الأولى",
-                                    url: "aHR0cHM6Ly9iY2RuLmFrYW1haS1jZG4tZGVsaXZlcnkuY29tL2NiMmUyZDg0LTA0ODMtNDFmZC04MzFmLTFkMzg5OTc1YWIwMS83MjBwL3ZpZGVvLm0zdTg="
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        };
+<script>
+// التهيئة الأولية
+const ws = new WebSocket('wss://secured-backend.iraqedu.iq/encrypted-channel');
+const cryptoKey = new TextEncoder().encode(
+  window.btoa(window.location.hostname + 'SECURE_SALT_123')
+).buffer;
 
-        function decodeBase64(encoded) {
-            return decodeURIComponent(atob(encoded).split('').map(c => 
-                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-            ).join(''));
-        }
+// نظام التشفير
+async function encryptData(data) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await crypto.subtle.importKey('raw', cryptoKey, 'AES-GCM', false, ['encrypt']);
+  const encrypted = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    key,
+    new TextEncoder().encode(JSON.stringify(data))
+  );
+  return { iv, encrypted };
+}
 
-        function navigate(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(page + 'Page').classList.add('active');
-        }
+async function decryptData({ iv, encrypted }) {
+  const key = await crypto.subtle.importKey('raw', cryptoKey, 'AES-GCM', false, ['decrypt']);
+  const decrypted = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: new Uint8Array(iv) },
+    key,
+    new Uint8Array(encrypted)
+  );
+  return JSON.parse(new TextDecoder().decode(decrypted));
+}
 
-        function renderTeachers() {
-            const container = document.getElementById('teachersGrid');
-            container.innerHTML = encryptedData.teachers.map(teacher => `
-                <div class="teacher-card" onclick="showTeacher(${teacher.id})">
-                    <img src="${decodeBase64(teacher.image)}" class="teacher-img">
-                    <h3>${teacher.name}</h3>
-                    <p>${teacher.subject}</p>
-                </div>
-            `).join('');
-        }
+// إدارة الاتصال
+ws.onmessage = async (event) => {
+  try {
+    const data = await decryptData(JSON.parse(event.data));
+    if(data.type === 'VIDEO_DATA') {
+      const video = document.getElementById('secureVideoPlayer');
+      video.src = URL.createObjectURL(new Blob([data.payload], { type: 'application/vnd.apple.mpegurl' }));
+      navigate('video');
+    }
+  } catch (error) {
+    console.error('فك التشفير فشل:', error);
+  }
+};
 
-        function showTeacher(teacherId) {
-            const teacher = encryptedData.teachers.find(t => t.id === teacherId);
-            const container = document.getElementById('classesList');
-            
-            container.innerHTML = teacher.classes.map(cls => `
-                <div class="class-header" onclick="toggleLectures(this)">
-                    <h3>${cls.name}</h3>
-                    <span>▼</span>
-                </div>
-                <div class="lectures-list">
-                    ${cls.lectures.map(lec => `
-                        <div class="lecture-item" onclick="playVideo('${lec.url}', '${lec.title}')">
-                            ${lec.title}
-                        </div>
-                    `).join('')}
-                </div>
-            `).join('');
-            
-            navigate('classes');
-        }
+// تحميل بيانات المعلم
+async function loadTeacher(teacherId) {
+  const request = {
+    type: 'FETCH_TEACHER',
+    timestamp: Date.now(),
+    token: Array.from(crypto.getRandomValues(new Uint8Array(16))),
+    teacherId
+  };
 
-        function toggleLectures(element) {
-            const list = element.nextElementSibling;
-            list.style.display = list.style.display === 'none' ? 'grid' : 'none';
-            element.querySelector('span').textContent = list.style.display === 'none' ? '▼' : '▲';
-        }
+  const { iv, encrypted } = await encryptData(request);
+  ws.send(JSON.stringify({ iv: Array.from(iv), encrypted: Array.from(new Uint8Array(encrypted)) }));
+}
 
-        function playVideo(encodedUrl, title) {
-            const video = document.getElementById('videoPlayer');
-            const url = decodeBase64(encodedUrl);
-            
-            if(Hls.isSupported()) {
-                const hls = new Hls();
-                hls.loadSource(url);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-            } else if(video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = url;
-                video.addEventListener('loadedmetadata', () => video.play());
-            }
-            
-            navigate('video');
-        }
+// نظام التنقل
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page + 'Page').classList.add('active');
+}
 
-        document.getElementById('searchButton').addEventListener('click', () => {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = encryptedData.teachers.filter(t => 
-                t.name.toLowerCase().includes(term) || 
-                t.subject.toLowerCase().includes(term)
-            );
-            document.getElementById('teachersGrid').innerHTML = filtered.map(t => `
-                <div class="teacher-card" onclick="showTeacher(${t.id})">
-                    <img src="${decodeBase64(t.image)}" class="teacher-img">
-                    <h3>${t.name}</h3>
-                    <p>${t.subject}</p>
-                </div>
-            `).join('');
-        });
+// حماية إضافية
+document.addEventListener('keydown', (e) => {
+  if(e.ctrlKey || e.key === 'F12') e.preventDefault();
+});
 
-        // التهيئة الأولية
-        renderTeachers();
-    </script>
+// إدارة الأخطاء
+ws.onerror = (error) => {
+  console.error('خطأ في الاتصال:', error);
+  alert('حدث خطأ في الاتصال بالخادم. يرجى المحاولة لاحقًا.');
+};
+
+ws.onclose = () => {
+  console.warn('تم إغلاق الاتصال');
+  alert('تم إغلاق الاتصال بالخادم. يرجى تحديث الصفحة.');
+};
+</script>
 </body>
 </html>
