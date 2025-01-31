@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شبكة القلم التعليمية</title>
+    <title>IRAQEDU</title>
     <style>
-        /* الأساسيات */
         :root {
             --primary: #c62828;
             --dark-bg: #0a0a0a;
@@ -27,12 +26,6 @@
             line-height: 1.6;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* التصميم العام */
         .page {
             display: none;
             padding: 2rem;
@@ -50,7 +43,6 @@
             to { opacity: 1; }
         }
 
-        /* الهيدر */
         header {
             background: var(--dark-card);
             padding: 1rem;
@@ -82,12 +74,6 @@
             opacity: 0.9;
         }
 
-        /* الصفحة الرئيسية */
-        .home-page {
-            display: grid;
-            gap: 2rem;
-        }
-
         .search-container {
             max-width: 600px;
             margin: 0 auto;
@@ -112,11 +98,6 @@
             padding: 0 1.5rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
-        }
-
-        #searchButton:hover {
-            opacity: 0.9;
         }
 
         .teachers-grid {
@@ -145,132 +126,55 @@
             border-radius: 8px;
         }
 
-        .teacher-name {
-            margin: 1rem 0;
-            text-align: center;
-        }
-
-        /* صفحة الفصول والمحاضرات */
-        .classes-page {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .teacher-info {
-            background: var(--dark-card);
-            padding: 1.5rem;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .teacher-img-lg {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-        }
-
         .classes-list {
             display: grid;
             gap: 1rem;
-        }
-
-        .class-card {
-            background: var(--dark-card);
-            padding: 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
         }
 
         .class-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.5rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .class-header:hover {
-            background: #2a1a1a;
+            padding: 1rem;
+            background: var(--dark-card);
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         .lectures-list {
             display: none;
             gap: 0.5rem;
-            margin-top: 1rem;
-            padding-right: 1rem;
+            padding: 0.5rem;
         }
 
         .lecture-item {
-            padding: 0.8rem;
+            padding: 1rem;
             background: var(--dark-bg);
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
-            border-right: 3px solid var(--primary);
         }
 
         .lecture-item:hover {
             background: #4a1a1a;
         }
 
-        /* صفحة الفيديو */
-        .video-page {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 10px;
-            background: black;
+            margin: 2rem 0;
         }
 
         .video-container video {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-        }
-
-        .video-details {
-            background: var(--dark-card);
-            padding: 1.5rem;
             border-radius: 10px;
         }
 
-        .back-btn {
-            background: var(--primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-
-        /* التجاوب */
         @media (max-width: 768px) {
             .teachers-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .teacher-info {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .video-details {
-                padding: 1rem;
             }
         }
     </style>
@@ -278,107 +182,46 @@
 </head>
 <body>
     <header>
-        <img src="https://i.imghippo.com/files/mjo2678Udg.png" alt="IRAQEDU" class="logo" onclick="navigate('home')">
+        <img src="https://i.imghippo.com/files/mjo2678Udg.png" class="logo" onclick="navigate('home')">
         <button class="nav-btn" onclick="navigate('home')">الصفحة الرئيسية</button>
     </header>
 
-    <!-- الصفحة الرئيسية -->
     <div id="homePage" class="page active">
-        <div class="home-page">
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="ابحث عن مدرس...">
-                <button id="searchButton">بحث</button>
-            </div>
-
-            <div class="teachers-grid" id="teachersGrid"></div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث عن مدرس...">
+            <button id="searchButton">بحث</button>
         </div>
+        <div class="teachers-grid" id="teachersGrid"></div>
     </div>
 
-    <!-- صفحة الفصول والمحاضرات -->
     <div id="classesPage" class="page">
-        <div class="classes-page">
-            <div class="teacher-info">
-                <img id="teacherImage" class="teacher-img-lg">
-                <div>
-                    <h2 id="teacherName"></h2>
-                    <p id="teacherSubject"></p>
-                </div>
-            </div>
-
-            <div class="classes-list" id="classesList"></div>
-        </div>
+        <div class="classes-list" id="classesList"></div>
     </div>
 
-    <!-- صفحة الفيديو -->
     <div id="videoPage" class="page">
-        <div class="video-page">
-            <div class="video-container">
-                <video id="videoPlayer" controls></video>
-            </div>
-
-            <div class="video-details">
-                <h2 id="videoTitle"></h2>
-                <p id="videoDescription"></p>
-                <div class="back-btn" onclick="navigate('classes')">
-                    <span>العودة للفصول</span>
-                </div>
-            </div>
+        <div class="video-container">
+            <video id="videoPlayer" controls></video>
         </div>
+        <button class="nav-btn" onclick="navigate('classes')">العودة</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        const pages = {
-            home: document.getElementById('homePage'),
-            classes: document.getElementById('classesPage'),
-            video: document.getElementById('videoPage')
-        };
-
-        const teachersGrid = document.getElementById('teachersGrid');
-        const teacherImage = document.getElementById('teacherImage');
-        const teacherName = document.getElementById('teacherName');
-        const teacherSubject = document.getElementById('teacherSubject');
-        const videoPlayer = document.getElementById('videoPlayer');
-        const videoTitle = document.getElementById('videoTitle');
-        const videoDescription = document.getElementById('videoDescription');
-        const classesList = document.getElementById('classesList');
-        const searchInput = document.getElementById('searchInput');
-        const searchButton = document.getElementById('searchButton');
-
-        const data = {
+        // بيانات مشفرة
+        const encryptedData = {
             teachers: [
                 {
                     id: 1,
                     name: "حسين الهاشمي",
-                    image: "https://i.imghippo.com/files/dmG9647kb.png",
-                    subject: "مدرس كيمياء",
+                    image: "aHR0cHM6Ly9pLmltZ2hpcHBvLmNvbS9maWxlcy9kbUc5NjQ3a2IucG5n",
+                    subject: "الرياضيات",
                     classes: [
                         {
                             name: "الفصل الأول",
                             lectures: [
                                 {
-                                    title: "المحاضرة الاولى",
-                                    description: "",
-                                    url: "https://bcdn.akamai-cdn-delivery.com/cb2e2d84-0483-41fd-831f-1d389975ab01/720p/video.m3u8"
-                                },
-                                
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    name: "حيدر عبدالائمة",
-                    image: "https://i.imghippo.com/files/HaY4041jTA.png",
-                    subject: "مدرس رياضيات",
-                    classes: [
-                        {
-                            name: "الفصل الأول",
-                            lectures: [
-                                {
-                                    title: "المحاضرة الاولى",
-                                    description: "",
-                                    url: "https://vz-99e5c202-ca5.b-cdn.net/8f6f69a3-112b-4e4e-9d0b-a7aa2d3ff9e8/720p/video.m3u8"
+                                    title: "المحاضرة الأولى",
+                                    url: "aHR0cHM6Ly9iY2RuLmFrYW1haS1jZG4tZGVsaXZlcnkuY29tL2NiMmUyZDg0LTA0ODMtNDFmZC04MzFmLTFkMzg5OTc1YWIwMS83MjBwL3ZpZGVvLm0zdTg="
                                 }
                             ]
                         }
@@ -387,87 +230,88 @@
             ]
         };
 
-        function navigate(page) {
-            Object.values(pages).forEach(p => p.classList.remove('active'));
-            pages[page].classList.add('active');
+        function decodeBase64(encoded) {
+            return decodeURIComponent(atob(encoded).split('').map(c => 
+                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+            ).join(''));
         }
 
-        function renderTeachers(teachers = data.teachers) {
-            teachersGrid.innerHTML = teachers.map(teacher => `
+        function navigate(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(page + 'Page').classList.add('active');
+        }
+
+        function renderTeachers() {
+            const container = document.getElementById('teachersGrid');
+            container.innerHTML = encryptedData.teachers.map(teacher => `
                 <div class="teacher-card" onclick="showTeacher(${teacher.id})">
-                    <img src="${teacher.image}" alt="${teacher.name}" class="teacher-img">
-                    <h3 class="teacher-name">${teacher.name}</h3>
+                    <img src="${decodeBase64(teacher.image)}" class="teacher-img">
+                    <h3>${teacher.name}</h3>
                     <p>${teacher.subject}</p>
                 </div>
             `).join('');
         }
 
         function showTeacher(teacherId) {
-            const teacher = data.teachers.find(t => t.id === teacherId);
-            teacherImage.src = teacher.image;
-            teacherName.textContent = teacher.name;
-            teacherSubject.textContent = teacher.subject;
-            renderClasses(teacher.classes);
+            const teacher = encryptedData.teachers.find(t => t.id === teacherId);
+            const container = document.getElementById('classesList');
+            
+            container.innerHTML = teacher.classes.map(cls => `
+                <div class="class-header" onclick="toggleLectures(this)">
+                    <h3>${cls.name}</h3>
+                    <span>▼</span>
+                </div>
+                <div class="lectures-list">
+                    ${cls.lectures.map(lec => `
+                        <div class="lecture-item" onclick="playVideo('${lec.url}', '${lec.title}')">
+                            ${lec.title}
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+            
             navigate('classes');
         }
 
-        function renderClasses(classes) {
-            classesList.innerHTML = classes.map(cls => `
-                <div class="class-card">
-                    <div class="class-header" onclick="toggleLectures(this)">
-                        <h3>${cls.name}</h3>
-                        <span>▼</span>
-                    </div>
-                    <div class="lectures-list">
-                        ${cls.lectures.map((lec, i) => `
-                            <div class="lecture-item" 
-                                 onclick="playVideo('${lec.url}', '${lec.title}', '${lec.description}')">
-                                ${i + 1}. ${lec.title}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
-
         function toggleLectures(element) {
-            const lecturesList = element.parentElement.querySelector('.lectures-list');
-            const arrow = element.querySelector('span');
-            lecturesList.style.display = lecturesList.style.display === 'none' ? 'grid' : 'none';
-            arrow.textContent = lecturesList.style.display === 'none' ? '▼' : '▲';
+            const list = element.nextElementSibling;
+            list.style.display = list.style.display === 'none' ? 'grid' : 'none';
+            element.querySelector('span').textContent = list.style.display === 'none' ? '▼' : '▲';
         }
 
-        function playVideo(url, title, description) {
+        function playVideo(encodedUrl, title) {
+            const video = document.getElementById('videoPlayer');
+            const url = decodeBase64(encodedUrl);
+            
             if(Hls.isSupported()) {
                 const hls = new Hls();
                 hls.loadSource(url);
-                hls.attachMedia(videoPlayer);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    videoPlayer.play();
-                });
-            } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-                videoPlayer.src = url;
-                videoPlayer.addEventListener('loadedmetadata', function() {
-                    videoPlayer.play();
-                });
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            } else if(video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.addEventListener('loadedmetadata', () => video.play());
             }
-
-            videoTitle.textContent = title;
-            videoDescription.textContent = description;
+            
             navigate('video');
         }
 
-        // البحث
-        searchButton.addEventListener('click', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            const filteredTeachers = data.teachers.filter(teacher => 
-                teacher.name.toLowerCase().includes(searchTerm) ||
-                teacher.subject.toLowerCase().includes(searchTerm)
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = encryptedData.teachers.filter(t => 
+                t.name.toLowerCase().includes(term) || 
+                t.subject.toLowerCase().includes(term)
             );
-            renderTeachers(filteredTeachers);
+            document.getElementById('teachersGrid').innerHTML = filtered.map(t => `
+                <div class="teacher-card" onclick="showTeacher(${t.id})">
+                    <img src="${decodeBase64(t.image)}" class="teacher-img">
+                    <h3>${t.name}</h3>
+                    <p>${t.subject}</p>
+                </div>
+            `).join('');
         });
 
-        // تهيئة أولية
+        // التهيئة الأولية
         renderTeachers();
     </script>
 </body>
