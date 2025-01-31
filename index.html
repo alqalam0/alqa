@@ -1,208 +1,502 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IRAQEDU</title>
-<style>
-:root {
-  --primary: #c62828;
-  --dark-bg: #0a0a0a;
-  --dark-text: #f5f5f5;
-  --dark-card: #1a1a1a;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRAQEDU</title>
+    <style>
+        /* الأساسيات */
+        :root {
+            --primary: #c62828;
+            --dark-bg: #0a0a0a;
+            --dark-text: #f5f5f5;
+            --dark-card: #1a1a1a;
+            --dark-border: #333;
+        }* {
+        box-sizing: border-box;
+        font-family: 'Almarai', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-* {
-  box-sizing: border-box;
-  font-family: 'Almarai', sans-serif;
-  margin: 0;
-  padding: 0;
-  user-select: none;
-  -webkit-user-drag: none;
-}
+    body {
+        background: var(--dark-bg);
+        color: var(--dark-text);
+        line-height: 1.6;
+    }
 
-body {
-  background: var(--dark-bg);
-  color: var(--dark-text);
-  line-height: 1.6;
-}
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
-header {
-  background: var(--dark-card);
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+    /* التصميم العام */
+    .page {
+        display: none;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-.logo {
-  height: 50px;
-  cursor: pointer;
-  filter: drop-shadow(0 0 5px var(--primary));
-}
+    .page.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
 
-.nav-btn {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: opacity 0.3s;
-}
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
-.page {
-  display: none;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
+    /* الهيدر */
+    header {
+        background: var(--dark-card);
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
 
-.page.active {
-  display: block;
-  animation: fadeIn 0.5s ease;
-}
+    .logo {
+        height: 50px;
+        cursor: pointer;
+    }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    .nav-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-.teacher-card {
-  background: var(--dark-card);
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin: 1rem 0;
-  cursor: pointer;
-  transition: transform 0.3s;
-  border: 2px solid var(--primary);
-}
+    .nav-btn:hover {
+        opacity: 0.9;
+    }
 
-.teacher-card:hover {
-  transform: translateY(-5px);
-}
+    /* الصفحة الرئيسية */
+    .home-page {
+        display: grid;
+        gap: 2rem;
+    }
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  margin: 2rem 0;
-}
+    .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        gap: 0.5rem;
+    }
 
-.video-container video {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: #000;
-}
+    #searchInput {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid var(--dark-border);
+        border-radius: 8px;
+        background: var(--dark-card);
+        color: var(--dark-text);
+        font-size: 1rem;
+    }
+
+    #searchButton {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #searchButton:hover {
+        opacity: 0.9;
+    }
+
+    .teachers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .teacher-card {
+        background: var(--dark-card);
+        padding: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        border-left: 4px solid var(--primary);
+    }
+
+    .teacher-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .teacher-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .teacher-name {
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    /* صفحة الفصول والمحاضرات */
+    .classes-page {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .teacher-info {
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .teacher-img-lg {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+    }
+
+    .classes-list {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .class-card {
+        background: var(--dark-card);
+        padding: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .class-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        border-left: 4px solid var(--primary);
+    }
+
+    .class-header:hover {
+        background: #2a1a1a;
+    }
+
+    .lectures-list {
+        display: none;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding-right: 1rem;
+    }
+
+    .lecture-item {
+        padding: 0.8rem;
+        background: var(--dark-bg);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        border-right: 3px solid var(--primary);
+    }
+
+    .lecture-item:hover {
+        background: #4a1a1a;
+    }
+
+    /* صفحة الفيديو */
+    .video-page {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 10px;
+        background: black;
+    }
+
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-details {
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .back-btn {
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    /* التجاوب */
+    @media (max-width: 768px) {
+        .teachers-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .teacher-info {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .video-details {
+            padding: 1rem;
+        }
+    }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
-<body oncontextmenu="return false">
-
-<header>
-  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..." class="logo" onclick="navigate('home')">
-  <button class="nav-btn" onclick="navigate('home')">🏠 الرئيسية</button>
-</header>
-
+<body>
+    <header>
+        <img src="https://i.imghippo.com/files/mjo2678Udg.png" alt="IRAQEDU" class="logo" onclick="navigate('home')">
+        <button class="nav-btn" onclick="navigate('home')">الصفحة الرئيسية</button>
+    </header><!-- الصفحة الرئيسية -->
 <div id="homePage" class="page active">
-  <div class="teacher-card" onclick="loadTeacher('ENCRYPTED_TEACHER_1')">
-    <h3>👨🏫 الأستاذ حسين الهاشمي</h3>
-    <p>📚 مادة الرياضيات المتقدمة</p>
-  </div>
-  <div class="teacher-card" onclick="loadTeacher('ENCRYPTED_TEACHER_2')">
-    <h3>👩🏫 الأستاذة سارة أحمد</h3>
-    <p>📖 مادة الفيزياء</p>
-  </div>
+    <div class="home-page">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث عن مدرس...">
+            <button id="searchButton">بحث</button>
+        </div>
+
+        <div class="teachers-grid" id="teachersGrid"></div>
+    </div>
 </div>
 
+<!-- صفحة الفصول والمحاضرات -->
+<div id="classesPage" class="page">
+    <div class="classes-page">
+        <div class="teacher-info">
+            <img id="teacherImage" class="teacher-img-lg">
+            <div>
+                <h2 id="teacherName"></h2>
+                <p id="teacherSubject"></p>
+            </div>
+        </div>
+
+        <div class="classes-list" id="classesList"></div>
+    </div>
+</div>
+
+<!-- صفحة الفيديو -->
 <div id="videoPage" class="page">
-  <div class="video-container">
-    <video id="secureVideoPlayer" controls disablePictureInPicture></video>
-  </div>
-  <button class="nav-btn" onclick="navigate('home')">← العودة</button>
+    <div class="video-page">
+        <div class="video-container">
+            <video id="videoPlayer" controls></video>
+        </div>
+
+        <div class="video-details">
+            <h2 id="videoTitle"></h2>
+            <p id="videoDescription"></p>
+            <div class="back-btn" onclick="navigate('classes')">
+                <span>العودة للفصول</span>
+            </div>
+        </div>
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
-// التهيئة الأولية
-const ws = new WebSocket('wss://secured-backend.iraqedu.iq/encrypted-channel');
-const cryptoKey = new TextEncoder().encode(
-  window.btoa(window.location.hostname + 'SECURE_SALT_123')
-).buffer;
-
-// نظام التشفير
-async function encryptData(data) {
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const key = await crypto.subtle.importKey('raw', cryptoKey, 'AES-GCM', false, ['encrypt']);
-  const encrypted = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    new TextEncoder().encode(JSON.stringify(data))
-  );
-  return { iv, encrypted };
-}
-
-async function decryptData({ iv, encrypted }) {
-  const key = await crypto.subtle.importKey('raw', cryptoKey, 'AES-GCM', false, ['decrypt']);
-  const decrypted = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: new Uint8Array(iv) },
-    key,
-    new Uint8Array(encrypted)
-  );
-  return JSON.parse(new TextDecoder().decode(decrypted));
-}
-
-// إدارة الاتصال
-ws.onmessage = async (event) => {
-  try {
-    const data = await decryptData(JSON.parse(event.data));
-    if(data.type === 'VIDEO_DATA') {
-      const video = document.getElementById('secureVideoPlayer');
-      video.src = URL.createObjectURL(new Blob([data.payload], { type: 'application/vnd.apple.mpegurl' }));
-      navigate('video');
-    }
-  } catch (error) {
-    console.error('فك التشفير فشل:', error);
-  }
+const pages = {
+    home: document.getElementById('homePage'),
+    classes: document.getElementById('classesPage'),
+    video: document.getElementById('videoPage')
 };
 
-// تحميل بيانات المعلم
-async function loadTeacher(teacherId) {
-  const request = {
-    type: 'FETCH_TEACHER',
-    timestamp: Date.now(),
-    token: Array.from(crypto.getRandomValues(new Uint8Array(16))),
-    teacherId
-  };
+const teachersGrid = document.getElementById('teachersGrid');
+const teacherImage = document.getElementById('teacherImage');
+const teacherName = document.getElementById('teacherName');
+const teacherSubject = document.getElementById('teacherSubject');
+const videoPlayer = document.getElementById('videoPlayer');
+const videoTitle = document.getElementById('videoTitle');
+const videoDescription = document.getElementById('videoDescription');
+const classesList = document.getElementById('classesList');
+const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
 
-  const { iv, encrypted } = await encryptData(request);
-  ws.send(JSON.stringify({ iv: Array.from(iv), encrypted: Array.from(new Uint8Array(encrypted)) }));
-}
+let hls = null;  // تعريف متغير لمكتبة Hls.js
 
-// نظام التنقل
+const data = {
+    teachers: [
+        {
+            id: 1,
+            name: "حسين الهاشمي",
+            image: "https://i.imghippo.com/files/dmG9647kb.png",
+            subject: "مدرس رياضيات",
+            classes: [
+                {
+                    name: "الفصل الأول",
+                    lectures: [
+                        {
+                            title: "المحاضرة 1: مقدمة في الجبر",
+                            description: "شرح أساسيات الجبر والمفاهيم الأولية",
+                            url: "https://bcdn.akamai-cdn-delivery.com/cb2e2d84-0483-41fd-831f-1d389975ab01/720p/video.m3u8"
+                        },
+                        {
+                            title: "المحاضرة 2: المعادلات الخطية",
+                            description: "حل المعادلات الخطية بمتغير واحد",
+                            url: "https://example.com/video2.m3u8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: "محمد عبدالله",
+            image: "https://via.placeholder.com/300",
+            subject: "مدرس فيزياء",
+            classes: [
+                {
+                    name: "الفصل الأول",
+                    lectures: [
+                        {
+                            title: "المحاضرة 1: مقدمة في الميكانيكا",
+                            description: "أساسيات الميكانيكا الكلاسيكية",
+                            url: "https://example.com/video3.m3u8"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
+
 function navigate(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(page + 'Page').classList.add('active');
+    // إيقاف الفيديو عند الانتقال إلى صفحات أخرى
+    if (page !== 'video') {
+        stopVideo();  // إيقاف الفيديو إذا لم تكن الصفحة الحالية هي صفحة الفيديو
+    }
+
+    Object.values(pages).forEach(p => p.classList.remove('active'));
+    pages[page].classList.add('active');
 }
 
-// حماية إضافية
-document.addEventListener('keydown', (e) => {
-  if(e.ctrlKey || e.key === 'F12') e.preventDefault();
+function renderTeachers(teachers = data.teachers) {
+    teachersGrid.innerHTML = teachers.map(teacher => `
+        <div class="teacher-card" onclick="showTeacher(${teacher.id})">
+            <img src="${teacher.image}" alt="${teacher.name}" class="teacher-img">
+            <h3 class="teacher-name">${teacher.name}</h3>
+            <p>${teacher.subject}</p>
+        </div>
+    `).join('');
+}
+
+function showTeacher(teacherId) {
+    const teacher = data.teachers.find(t => t.id === teacherId);
+    teacherImage.src = teacher.image;
+    teacherName.textContent = teacher.name;
+    teacherSubject.textContent = teacher.subject;
+    renderClasses(teacher.classes);
+    navigate('classes');
+}
+
+function renderClasses(classes) {
+    classesList.innerHTML = classes.map(cls => `
+        <div class="class-card">
+            <div class="class-header" onclick="toggleLectures(this)">
+                <h3>${cls.name}</h3>
+                <span>▼</span>
+            </div>
+            <div class="lectures-list">
+                ${cls.lectures.map((lec, i) => `
+                    <div class="lecture-item" 
+                         onclick="playVideo('${lec.url}', '${lec.title}', '${lec.description}')">
+                        ${i + 1}. ${lec.title}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleLectures(element) {
+    const lecturesList = element.parentElement.querySelector('.lectures-list');
+    const arrow = element.querySelector('span');
+    lecturesList.style.display = lecturesList.style.display === 'none' ? 'grid' : 'none';
+    arrow.textContent = lecturesList.style.display === 'none' ? '▼' : '▲';
+}
+
+function playVideo(url, title, description) {
+    if (Hls.isSupported()) {
+        // إذا تم تحميل Hls.js بالفعل، نقوم بتجديده
+        if (hls) {
+            hls.destroy();  // إيقاف النسخة السابقة من Hls.js
+        }
+        hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(videoPlayer);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            videoPlayer.play();
+        });
+    } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+        videoPlayer.src = url;
+        videoPlayer.addEventListener('loadedmetadata', function() {
+            videoPlayer.play();
+        });
+    }
+
+    videoTitle.textContent = title;
+    videoDescription.textContent = description;
+    navigate('video');
+}
+
+function stopVideo() {
+    // إيقاف الفيديو إذا كان يعمل
+    if (videoPlayer) {
+        videoPlayer.pause();
+        videoPlayer.src = '';
+        if (hls) {
+            hls.destroy();  // إيقاف Hls.js إذا كان قيد التشغيل
+            hls = null;
+        }
+    }
+}
+
+searchButton.addEventListener('click', () => {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    const filteredTeachers = data.teachers.filter(teacher => 
+        teacher.name.toLowerCase().includes(searchTerm) ||
+        teacher.subject.toLowerCase().includes(searchTerm)
+    );
+    renderTeachers(filteredTeachers);
 });
 
-// إدارة الأخطاء
-ws.onerror = (error) => {
-  console.error('خطأ في الاتصال:', error);
-  alert('حدث خطأ في الاتصال بالخادم. يرجى المحاولة لاحقًا.');
-};
+// تهيئة أولية
+renderTeachers();
 
-ws.onclose = () => {
-  console.warn('تم إغلاق الاتصال');
-  alert('تم إغلاق الاتصال بالخادم. يرجى تحديث الصفحة.');
-};
 </script>
 </body>
 </html>
+
+
+
+
+
